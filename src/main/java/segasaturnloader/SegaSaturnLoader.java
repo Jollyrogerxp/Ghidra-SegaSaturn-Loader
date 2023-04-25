@@ -1328,6 +1328,9 @@ public class SegaSaturnLoader extends AbstractLibrarySupportLoader {
 			else if(version == 2) {
 				headerSize = HEADER_SIZE_VERSION_2;
 			}
+			else if(version == 3) {
+				headerSize = HEADER_SIZE_VERSION_2;
+			}
 			else{
 				throw new IOException("Invalid YSS version!!");
 			}
@@ -1407,8 +1410,10 @@ public class SegaSaturnLoader extends AbstractLibrarySupportLoader {
 			currPos += REGION_HEADER_SIZE;
 
 			// Backup RAM
-			readYSSRegion(0x00180000, 0x10000, false, provider, currPos, program, monitor, log);
-			currPos += 0x10000;
+			if(version != 3) {
+				readYSSRegion(0x00180000, 0x10000, false, provider, currPos, program, monitor, log);
+				currPos += 0x10000;
+			}			
 
 			// high work ram
 			readYSSRegion(0x06000000, 0x100000, true, provider, currPos, program, monitor, log);
